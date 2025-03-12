@@ -189,7 +189,7 @@ assign VGA_SCALER  = 0;
 assign VGA_DISABLE = 0;
 assign HDMI_FREEZE = 0;
 assign HDMI_BLACKOUT = 0;
-assign GUN_BORDER_EN = status[47];
+	assign GUN_BORDER_EN = status[19];
 
 assign AUDIO_S = 1;
 assign AUDIO_MIX = 0;
@@ -216,7 +216,7 @@ localparam CONF_STR = {
 	"-;",
 	"O6,Rotate video,Off,On;",
 	"O7,Flip video,Off,On;",
-	"oF,Sinden Boarder,Off,On;",
+	"OJ,Sinden Boarder,Off,On;",
 	"-;",	
 	"RA,Open menu;",
 	"-;",
