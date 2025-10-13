@@ -68,10 +68,10 @@ module system (
 	output	[15:0]	AUDIO_L,
 	output	[15:0]	AUDIO_R,
 	// Border control
-        input         border_en_gun,
-        // Dynamic Sinden border size (menu controlled)
-        input  [3:0] border_h,  // horizontal border width selector (5–20)
-        input  [3:0] border_v  // vertical border height selector (5–20)
+    input         border_en_gun,
+    // Dynamic Sinden border size (menu controlled)
+    input  [3:0] border_h,  // horizontal border width selector (5–20)
+    input  [3:0] border_v  // vertical border height selector (5–20)
 );
 
 localparam [8:0] VGA_WIDTH = 9'd320;
