@@ -66,7 +66,12 @@ module system (
 	output			VGA_HB,
 	output			VGA_VB,
 	output	[15:0]	AUDIO_L,
-	output	[15:0]	AUDIO_R
+	output	[15:0]	AUDIO_R,
+	// Border control
+        input         border_en_gun,
+        // Dynamic Sinden border size (menu controlled)
+        input  [3:0] border_h,  // horizontal border width selector (5–20)
+        input  [3:0] border_v  // vertical border height selector (5–20)
 );
 
 localparam [8:0] VGA_WIDTH = 9'd320;
@@ -617,9 +622,21 @@ wire [23:0] rgb_final = video_sprite_layer_high ?
 `endif
 
 wire de = ~(VGA_VB || VGA_HB);
-assign VGA_R = de ? rgb_final[7:0] : 8'b0;
-assign VGA_G = de ? rgb_final[15:8] : 8'b0;
-assign VGA_B = de ? rgb_final[23:16] : 8'b0;
+
+// Map 0-15 to 5-20 pixels
+wire [8:0] h_border = 5 + border_h; // 5..20 pixels
+wire [8:0] v_border = 5 + border_v; // 5..20 pixels
+
+wire border_region = border_en_gun && (
+    (hcnt < h_border) || (hcnt >= (VGA_WIDTH - h_border)) ||
+    (vcnt < v_border) || (vcnt >= (VGA_HEIGHT - v_border))
+);
+
+wire [23:0] rgb_with_border = border_region ? 24'hFFFFFF : rgb_final;
+
+assign VGA_R = de ? rgb_with_border[7:0]   : 8'b0;
+assign VGA_G = de ? rgb_with_border[15:8]  : 8'b0;
+assign VGA_B = de ? rgb_with_border[23:16] : 8'b0;
 
 
 // Music player

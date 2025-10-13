@@ -214,6 +214,9 @@ localparam CONF_STR = {
 	"-;",
 	"O6,Rotate video,Off,On;",
 	"O7,Flip video,Off,On;",
+	"O[30],Sinden Border,Off,On;",
+	"o[57:54],Sinden Border Width,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;",
+	"o[61:58],Sinden Border Height,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20;",
 	"-;",	
 	"RA,Open menu;",
 	"-;",
@@ -226,7 +229,7 @@ localparam CONF_STR = {
 	"V,v",`BUILD_DATE
 };
 
-wire [31:0] status;
+wire [63:0] status;
 wire  [1:0] buttons;
 wire        forced_scandoubler;
 wire        video_rotated;
@@ -423,7 +426,10 @@ system system(
 	.ps2_mouse({ps2_mouse_ext,7'b0,ps2_mouse}),
 	.timestamp(timestamp),
 	.AUDIO_L(AUDIO_L),
-	.AUDIO_R(AUDIO_R)
+	.AUDIO_R(AUDIO_R),
+	.border_en_gun(status[30]),
+	.border_h(status[57:54]),
+	.border_v(status[61:58])
 );
 
 endmodule
